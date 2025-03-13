@@ -210,6 +210,10 @@ const playReminder = () => {
 
 // 🔔 Show Browser Notification
 const showNotification = () => {
+    if (typeof Notification === 'undefined') {
+        console.warn('Notifications are not supported on this device.');
+        return;
+    }
     if (enableNotification.value && Notification.permission === 'granted') {
         new Notification('Let`s Fokas on', {
             body: `${focusTask.value}`,
