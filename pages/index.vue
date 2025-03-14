@@ -158,10 +158,13 @@ onMounted(() => {
     enableNotification.value = JSON.parse(localStorage.getItem('enableNotification')) ?? true;
     soundVolume.value = JSON.parse(localStorage.getItem('soundVolume')) ?? 1;
     reminderInterval.value = JSON.parse(localStorage.getItem('reminderInterval')) ?? 5;
-
-    if (typeof Notification === 'undefined' && Notification.permission !== 'granted' && isDesktop()) {
-        Notification.requestPermission();
+    if (isDesktop()) {
+        if (Notification.permission !== 'granted' ) {
+            Notification.requestPermission();
+        }
     }
+
+   
 
     window.addEventListener('beforeunload', () => clearInterval(interval));
 });
