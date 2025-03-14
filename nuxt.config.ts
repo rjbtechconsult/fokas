@@ -46,7 +46,7 @@ export default defineNuxtConfig({
       ]
     },
     workbox: {
-      globPatterns: ['**/*.{js,css,html,png,svg,ico,json,woff2}'], // Cache essential files
+      globPatterns: ['**/*.{js,css,html,png,ico,json}'], // Cache essential files
       runtimeCaching: [
         {
           urlPattern: 'https://fonts.googleapis.com/.*',
