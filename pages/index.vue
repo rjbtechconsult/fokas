@@ -100,7 +100,7 @@
                     class="px-6 py-3 text-white text-lg rounded-lg shadow-lg transition duration-300"
                     :class="theme === 'dark' ? 'bg-blue-500 hover:bg-blue-600' : 'bg-blue-600 hover:bg-blue-700'"
                     @click="startFocusSession">
-                    Start Focus
+                    Start Fokasing
                 </button>
 
                 <button 
@@ -108,7 +108,7 @@
                     class="px-6 py-3 text-white text-lg rounded-lg shadow-lg transition duration-300"
                     :class="theme === 'dark' ? 'bg-red-500 hover:bg-red-600' : 'bg-red-600 hover:bg-red-700'"
                     @click="stopFocusSession">
-                    Stop Focus
+                    Stop Fokasing
                 </button>
             </div>
         </main>
