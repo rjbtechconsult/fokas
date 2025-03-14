@@ -214,7 +214,7 @@ const isDesktop = () => {
 
 // 🔔 Show Browser Notification
 const showNotification = () => {
-    if (typeof Notification === 'undefined' || !isDesktop()) {
+    if (typeof Notification === 'undefined' || !isDesktop() || typeof window === 'undefined') {
         return;
     }
     if (enableNotification.value && Notification.permission === 'granted') {
