@@ -146,14 +146,20 @@ const enableNotification = ref(true);
 const soundVolume = ref(1);
 const reminderInterval = ref(5); // Default interval in seconds
 
+const isDesktop = () => {
+    return !/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+};
+
 // 🟢 Load saved preferences
 onMounted(() => {
+    adjustTextareaHeight();
+
     enableSound.value = JSON.parse(localStorage.getItem('enableSound')) ?? true;
     enableNotification.value = JSON.parse(localStorage.getItem('enableNotification')) ?? true;
     soundVolume.value = JSON.parse(localStorage.getItem('soundVolume')) ?? 1;
     reminderInterval.value = JSON.parse(localStorage.getItem('reminderInterval')) ?? 5;
 
-    if (Notification.permission !== 'granted') {
+    if (typeof Notification === 'undefined' && Notification.permission !== 'granted' && isDesktop()) {
         Notification.requestPermission();
     }
 
@@ -208,22 +214,19 @@ const playReminder = () => {
     }
 };
 
-const isDesktop = () => {
-    return !/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-};
 
 // 🔔 Show Browser Notification
 const showNotification = () => {
-    // if (typeof Notification === 'undefined' || !isDesktop() || typeof window === 'undefined') {
-    //     return;
-    // }
-    // if (enableNotification.value && Notification.permission === 'granted') {
-    //     new Notification('Let`s Fokas on', {
-    //         body: `${focusTask.value}`,
-    //         requireInteraction: true,
-    //         icon: '/favicon.ico'
-    //     });
-    // }
+    if (typeof Notification === 'undefined' || !isDesktop() || typeof window === 'undefined') {
+        return;
+    }
+    if (enableNotification.value && Notification.permission === 'granted') {
+        new Notification('Let`s Fokas on', {
+            body: `${focusTask.value}`,
+            requireInteraction: true,
+            icon: '/favicon.ico'
+        });
+    }
 };
 
 // Adjust text area height dynamically
@@ -238,7 +241,6 @@ const adjustTextareaHeight = () => {
 };
 
 onUnmounted(() => {
-    adjustTextareaHeight();
     clearInterval(interval);
 });
 </script>
