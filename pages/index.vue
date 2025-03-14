@@ -208,10 +208,13 @@ const playReminder = () => {
     }
 };
 
+const isDesktop = () => {
+    return !/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+};
+
 // 🔔 Show Browser Notification
 const showNotification = () => {
-    if (typeof Notification === 'undefined') {
-        console.warn('Notifications are not supported on this device.');
+    if (typeof Notification === 'undefined' || !isDesktop()) {
         return;
     }
     if (enableNotification.value && Notification.permission === 'granted') {
