@@ -37,7 +37,7 @@
                  <!-- Custom Reminder Interval -->
                 <div class="flex flex-col gap-2">
                     <label class="text-sm" :class="theme === 'dark' ? 'text-gray-400' : 'text-gray-600'">
-                        Reminder Interval (seconds): {{ reminderInterval }}s
+                        Reminder Interval (minutes): {{ reminderInterval }}s
                     </label>
                     <input 
                         v-model="reminderInterval" 
@@ -197,7 +197,7 @@ const startFocusSession = () => {
         if (countdown.value === 0) {
             playReminder();
             showNotification();
-            countdown.value = reminderInterval.value;
+            countdown.value = reminderInterval.value * 60;
         }
     }, 1000);
 };
@@ -205,7 +205,7 @@ const startFocusSession = () => {
 const stopFocusSession = () => {
     clearInterval(interval);
     timerActive.value = false;
-    countdown.value = reminderInterval.value;
+    countdown.value = reminderInterval.value * 60;
 };
 
 // 🔊 Play Reminder Sound
