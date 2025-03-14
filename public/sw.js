@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fokas-v1';
+const CACHE_NAME = 'Fokos-v1';
 const ASSETS_TO_CACHE = [
     '/',
     // '/index.html',

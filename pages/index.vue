@@ -16,7 +16,7 @@
         ]">
 
             <div  class="mb-6">
-                <h1 class="text-3xl font-extrabold text-blue-500 mb-0 text-cente">Fokas</h1>
+                <h1 class="text-3xl font-extrabold text-blue-500 mb-0 text-cente">Fokos</h1>
                 <h6 :class="theme === 'dark' ? 'text-gray-400' : 'text-gray-600'">Stay focused with reminders and notifications</h6>
             </div>
 
@@ -62,7 +62,7 @@
             <!-- 🔽 Copyright & Version (Pinned to Bottom) -->
             <div class="mt-auto text-xs">
                 <p :class="theme === 'dark' ? 'text-gray-500' : 'text-gray-600'">
-                    © {{ new Date().getFullYear() }} Fokas. All rights reserved.
+                    © {{ new Date().getFullYear() }} Fokos. All rights reserved.
                 </p>
                 <p :class="theme === 'dark' ? 'text-gray-500' : 'text-gray-600'">Version 1.0.0</p>
             </div>
@@ -77,7 +77,7 @@
             :class="theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'">
 
             <!-- App Title -->
-            <h1 class="text-2xl font-extrabold mb-6 text-blue-500 text-center">Let's Fokas on</h1>
+            <h1 class="text-2xl font-extrabold mb-6 text-blue-500 text-center">Let's Fokos on</h1>
 
             <!-- Focus Task Input -->
             <div class="relative w-full max-w-5xl">
@@ -100,7 +100,7 @@
                     class="px-6 py-3 text-white text-lg rounded-lg shadow-lg transition duration-300"
                     :class="theme === 'dark' ? 'bg-blue-500 hover:bg-blue-600' : 'bg-blue-600 hover:bg-blue-700'"
                     @click="startFocusSession">
-                    Start Fokasing
+                    Start Fokosing
                 </button>
 
                 <button 
@@ -108,7 +108,7 @@
                     class="px-6 py-3 text-white text-lg rounded-lg shadow-lg transition duration-300"
                     :class="theme === 'dark' ? 'bg-red-500 hover:bg-red-600' : 'bg-red-600 hover:bg-red-700'"
                     @click="stopFocusSession">
-                    Stop Fokasing
+                    Stop Fokosing
                 </button>
             </div>
         </main>
@@ -222,14 +222,14 @@ const showNotification = () => {
     if (enableNotification.value && Notification.permission === 'granted') {
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.ready.then(registration => {
-                registration.showNotification('Let’s Fokas on', {
+                registration.showNotification('Let’s Fokos on', {
                     body: `${focusTask.value}`,
                     requireInteraction: true,
                     icon: '/favicon.ico'
                 });
             });
         }
-        // new Notification('Let’s Fokas on', {
+        // new Notification('Let’s Fokos on', {
         //     body: `${focusTask.value}`,
         //     requireInteraction: true,
         //     icon: '/favicon.ico'

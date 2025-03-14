@@ -12,8 +12,8 @@ export default defineNuxtConfig({
   ],
   pwa: {
     manifest: {
-      name: 'Fokas',
-      short_name: 'Fokas',
+      name: 'Fokos',
+      short_name: 'Fokos',
       description: 'Stay focused with gentle reminders',
       theme_color: '#111827',
       background_color: '#111827',
@@ -105,7 +105,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: 'Fokas - Stay Focused',
+      title: 'Fokos - Stay Focused',
       meta: [
         { name: 'description', content: 'A simple focus timer with reminders' }
       ],
