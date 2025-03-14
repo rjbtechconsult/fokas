@@ -37,3 +37,21 @@ self.addEventListener('fetch', (event) => {
         })
     );
 });
+
+self.addEventListener('notificationclick', function (event) {
+    event.notification.close(); // Close the notification when clicked
+
+    // Open the PWA when clicking the notification
+    event.waitUntil(
+        clients.matchAll({ type: "window" }).then(clientList => {
+            for (const client of clientList) {
+                if (client.url && 'focus' in client) {
+                    return client.focus();
+                }
+            }
+            if (clients.openWindow) {
+                return clients.openWindow('/');
+            }
+        })
+    );
+});

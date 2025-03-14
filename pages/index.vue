@@ -220,10 +220,25 @@ const showNotification = () => {
         return;
     }
     if (enableNotification.value && Notification.permission === 'granted') {
-        new Notification('Let’s Fokas on', {
-            body: `${focusTask.value}`,
-            requireInteraction: true,
-            icon: '/favicon.ico'
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.ready.then(registration => {
+                registration.showNotification('Let’s Fokas on', {
+                    body: `${focusTask.value}`,
+                    requireInteraction: true,
+                    icon: '/favicon.ico'
+                });
+            });
+        }
+        // new Notification('Let’s Fokas on', {
+        //     body: `${focusTask.value}`,
+        //     requireInteraction: true,
+        //     icon: '/favicon.ico'
+        // });
+    }else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                showNotification(); // Try again after permission is granted
+            }
         });
     }
 };
