@@ -214,16 +214,16 @@ const isDesktop = () => {
 
 // 🔔 Show Browser Notification
 const showNotification = () => {
-    if (typeof Notification === 'undefined' || !isDesktop() || typeof window === 'undefined') {
-        return;
-    }
-    if (enableNotification.value && Notification.permission === 'granted') {
-        new Notification('Let`s Fokas on', {
-            body: `${focusTask.value}`,
-            requireInteraction: true,
-            icon: '/favicon.ico'
-        });
-    }
+    // if (typeof Notification === 'undefined' || !isDesktop() || typeof window === 'undefined') {
+    //     return;
+    // }
+    // if (enableNotification.value && Notification.permission === 'granted') {
+    //     new Notification('Let`s Fokas on', {
+    //         body: `${focusTask.value}`,
+    //         requireInteraction: true,
+    //         icon: '/favicon.ico'
+    //     });
+    // }
 };
 
 // Adjust text area height dynamically
