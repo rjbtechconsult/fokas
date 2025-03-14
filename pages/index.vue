@@ -37,7 +37,7 @@
                  <!-- Custom Reminder Interval -->
                 <div class="flex flex-col gap-2">
                     <label class="text-sm" :class="theme === 'dark' ? 'text-gray-400' : 'text-gray-600'">
-                        Reminder Interval (minutes): {{ reminderInterval }}s
+                        Reminder Interval (minutes): {{ reminderInterval }}m
                     </label>
                     <input 
                         v-model="reminderInterval" 
@@ -113,8 +113,7 @@
             </div>
         </main>
     </div>
-</template>
-<script setup>
+</template><script setup>
 import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue';
 
 // ✅ Theme detection & switching
@@ -144,8 +143,9 @@ const sidebarOpen = ref(false);
 const enableSound = ref(true);
 const enableNotification = ref(true);
 const soundVolume = ref(1);
-const reminderInterval = ref(5); // Default interval in seconds
+const reminderInterval = ref(5); // Default interval in **minutes** (not seconds)
 
+// Helper function to check if the device is a desktop
 const isDesktop = () => {
     return !/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 };
@@ -157,14 +157,11 @@ onMounted(() => {
     enableSound.value = JSON.parse(localStorage.getItem('enableSound')) ?? true;
     enableNotification.value = JSON.parse(localStorage.getItem('enableNotification')) ?? true;
     soundVolume.value = JSON.parse(localStorage.getItem('soundVolume')) ?? 1;
-    reminderInterval.value = JSON.parse(localStorage.getItem('reminderInterval')) ?? 5;
-    if (isDesktop()) {
-        if (Notification.permission !== 'granted' ) {
-            Notification.requestPermission();
-        }
-    }
+    reminderInterval.value = JSON.parse(localStorage.getItem('reminderInterval')) ?? 5; // Ensure it’s saved in minutes
 
-   
+    if (isDesktop() && Notification.permission !== 'granted') {
+        Notification.requestPermission();
+    }
 
     window.addEventListener('beforeunload', () => clearInterval(interval));
 });
@@ -179,7 +176,7 @@ watch([enableSound, enableNotification, soundVolume, reminderInterval], ([sound,
 
 // 🟢 Focus Session Logic
 const focusTask = ref('');
-const countdown = ref(reminderInterval.value);
+const countdown = ref(reminderInterval.value * 60); // Convert minutes to seconds
 const timerActive = ref(false);
 let interval;
 
@@ -187,7 +184,7 @@ const startFocusSession = () => {
     if (!focusTask.value.trim() || timerActive.value) return;
 
     timerActive.value = true;
-    countdown.value = reminderInterval.value;
+    countdown.value = reminderInterval.value * 60; // Convert to seconds
 
     interval = setInterval(() => {
         if (countdown.value > 0) {
@@ -197,7 +194,7 @@ const startFocusSession = () => {
         if (countdown.value === 0) {
             playReminder();
             showNotification();
-            countdown.value = reminderInterval.value * 60;
+            countdown.value = reminderInterval.value * 60; // Reset for next cycle
         }
     }, 1000);
 };
@@ -205,7 +202,7 @@ const startFocusSession = () => {
 const stopFocusSession = () => {
     clearInterval(interval);
     timerActive.value = false;
-    countdown.value = reminderInterval.value * 60;
+    countdown.value = reminderInterval.value * 60; // Reset countdown
 };
 
 // 🔊 Play Reminder Sound
@@ -217,14 +214,13 @@ const playReminder = () => {
     }
 };
 
-
 // 🔔 Show Browser Notification
 const showNotification = () => {
     if (typeof Notification === 'undefined' || !isDesktop() || typeof window === 'undefined') {
         return;
     }
     if (enableNotification.value && Notification.permission === 'granted') {
-        new Notification('Let`s Fokas on', {
+        new Notification('Let’s Fokas on', {
             body: `${focusTask.value}`,
             requireInteraction: true,
             icon: '/favicon.ico'
@@ -247,3 +243,4 @@ onUnmounted(() => {
     clearInterval(interval);
 });
 </script>
+
